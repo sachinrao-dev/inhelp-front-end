@@ -18,7 +18,7 @@ function Login() {
   };
   return (
     <div className={classes.loginContainer}>
-      <div className={classes.container} style={{ margin: "100px auto" }}>
+      <div className={classes.container}>
         <TextField
           id="outlined-basic"
           label="Email"
