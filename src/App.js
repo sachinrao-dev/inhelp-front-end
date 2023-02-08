@@ -1,9 +1,13 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Login from "./Login";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Welcome to the dashboard</h1>
+    <div>
+      <Routes>
+        <Route path="/" element={<Login />} />
+      </Routes>
     </div>
   );
 }
