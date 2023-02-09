@@ -14,18 +14,25 @@ function SignUp() {
       email,
       password,
     };
-    try {
-      await fetch("http://localhost:8090/inhelp/signup", {
-        method: "post",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((response) => console.log(response));
-      navigate("/dashboard");
-    } catch (error) {
-      console.log(error);
+    let result = await fetch("http://localhost:8090/inhelp/signup", {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    result = await (await result).json();
+    if (result) {
+      navigate("/login");
+      console.log(result);
+    } else {
+      console.log(result, "sign up log here");
     }
+    // if (result.) {
+    //   navigate("/login");
+    // } else {
+    //   console.log(result.response);
+    // }
   };
   return (
     <div className={classes.loginContainer}>
