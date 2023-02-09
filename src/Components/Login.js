@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import useStyle from "../Style/LoginStyle";
 
@@ -31,6 +31,7 @@ function Login() {
   };
   return (
     <div className={classes.loginContainer}>
+      <p>Login</p>
       <div className={classes.container}>
         <TextField
           id="outlined-basic"
@@ -50,6 +51,10 @@ function Login() {
         <Button variant="contained" onClick={() => LoginHandler()}>
           Login
         </Button>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p>if you have not register ?</p>
+          <Link to="/">signup</Link>
+        </div>
       </div>
     </div>
   );

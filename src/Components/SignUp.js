@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import useStyle from "../Style/LoginStyle";
 
@@ -26,13 +26,8 @@ function SignUp() {
       navigate("/login");
       console.log(result);
     } else {
-      console.log(result, "sign up log here");
+      console.log(result);
     }
-    // if (result.) {
-    //   navigate("/login");
-    // } else {
-    //   console.log(result.response);
-    // }
   };
   return (
     <div className={classes.loginContainer}>
@@ -55,6 +50,12 @@ function SignUp() {
         <Button variant="contained" onClick={() => SignUpHandler()}>
           Sign Up
         </Button>
+        <div
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <p>Already have an account ?  </p>
+          <Link to="/login">login</Link>
+        </div>
       </div>
     </div>
   );
