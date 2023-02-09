@@ -4,39 +4,32 @@ import { TextField, Button } from "@mui/material";
 import useStyle from "../Style/LoginStyle";
 
 function SignUp() {
-  const classes = useStyle();
   const navigate = useNavigate();
-  const [name, setName] = useState();
+  const classes = useStyle();
   const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [category, setCategory] = useState();
-  const [description, setDescription] = useState();
+  const [password, setPassword] = useState();
 
-  const SignUpHandler = () => {
-    console.log(name, email, phone, category, description);
-    navigate("/login");
+  const SignUpHandler = async () => {
+    const data = {
+      email,
+      password,
+    };
+    try {
+      await fetch("http://localhost:8090/inhelp/signup", {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => console.log(response));
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   return (
     <div className={classes.loginContainer}>
       <div className={classes.container}>
-        <p>Sign Up</p>
-        <TextField
-          id="outlined-basic"
-          label="Name"
-          type="text"
-          variant="outlined"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <br />
-        <TextField
-          id="outlined-basic"
-          label="Phone No"
-          type="Number"
-          variant="outlined"
-          onChange={(e) => setPhone(e.target.value)}
-        />
-        <br />
         <TextField
           id="outlined-basic"
           label="Email"
@@ -47,24 +40,13 @@ function SignUp() {
         <br />
         <TextField
           id="outlined-basic"
-          label="Category"
-          type="text"
+          label="Password"
           variant="outlined"
-          onChange={(e) => setCategory(e.target.value)}
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <br />
-
-        <TextField
-          id="outlined-basic"
-          label="Description"
-          type="text"
-          variant="outlined"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <br />
-
         <Button variant="contained" onClick={() => SignUpHandler()}>
-          Submit
+          Sign Up
         </Button>
       </div>
     </div>

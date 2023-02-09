@@ -9,12 +9,25 @@ function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const LoginHandler = () => {
-    console.log(email, "Email is here");
-    console.log(password, "password is here");
-    setEmail("");
-    setPassword("");
-    navigate("/dashboard");
+  const LoginHandler = async () => {
+    const data = {
+      email,
+      password,
+    };
+    let result = fetch("http://localhost:8090/inhelp/login", {
+      method: "Post",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    result = await (await result).json();
+    if (result.email && result.password) {
+      navigate("/Dashboard");
+    } else {
+      console.log(result.response);
+    }
   };
   return (
     <div className={classes.loginContainer}>
