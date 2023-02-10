@@ -15,9 +15,26 @@ const useStyle = makeStyles({
     justifyContent: "center",
     "& InputField": {
       marginTop: "10px",
-      // width: "20%",
-      // background: "red",
     },
+  },
+  list: {
+    display: "flex",
+    "& p": {
+      marginRight: "20px",
+    },
+  },
+  buttons: {
+    marginTop: "30px",
+    width: "30%",
+    position: "relative",
+    bottom: "0",
+    right: "10px",
+  },
+  heading: {
+    textAlign: "center",
+    fontSize: "24px",
+    fontFamily: "sans-serif",
+    fontWeight: "600",
   },
 });
 

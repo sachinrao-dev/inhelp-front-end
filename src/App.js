@@ -4,6 +4,7 @@ import Login from "./Components/Login";
 import Dashboard from "./Components/Dashboard";
 import AddServiceForm from "./Components/AddServiceForm";
 import SignUp from "./Components/SignUp";
+import ServiceList from "./Components/ServiceList";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/addServiceForm" element={<AddServiceForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/serviceList" element={<ServiceList />} />
       </Routes>
     </div>
   );
