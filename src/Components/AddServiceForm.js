@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+/* eslint-disable react/no-unstable-nested-components */
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, MenuItem } from "@mui/material";
 import useStyle from "../Style/LoginStyle";
+import AddCategoryModal from "./AddCategoryModal";
 
 function AddServiceForm() {
   const classes = useStyle();
@@ -11,16 +13,35 @@ function AddServiceForm() {
   const [phone, setPhone] = useState();
   const [category, setCategory] = useState();
   const [description, setDescription] = useState();
+  const [data, setData] = useState();
 
-  const SignUpHandler = () => {
-    console.log(name, email, phone, category, description);
+  useEffect(() => {
+    fetch("http://localhost:8090/inhelp//listCategory").then((resp) => {
+      resp.json().then((item) => setData(item));
+    });
+  }, []);
+
+  const AddServiceHandler = () => {
+    const DataInsert = {
+      name,
+      email,
+      phone,
+      category,
+      description,
+    };
+    console.log(DataInsert, "data Inserter is here");
     navigate("/login");
   };
+
+  function AddCategoryHandler() {
+    console.log("sdfljkdsl");
+  }
 
   return (
     <div className={classes.loginContainer}>
       <div className={classes.container}>
         <p>Sign Up</p>
+        <Button onClick={AddCategoryHandler}>Add Category</Button>
         <TextField
           id="outlined-basic"
           label="Name"
@@ -46,12 +67,18 @@ function AddServiceForm() {
         />
         <br />
         <TextField
-          id="outlined-basic"
+          id="outlined-select-category"
+          select
           label="Category"
-          type="text"
-          variant="outlined"
+          helperText="Please select your category"
           onChange={(e) => setCategory(e.target.value)}
-        />
+        >
+          {data?.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option.category}
+            </MenuItem>
+          ))}
+        </TextField>
         <br />
 
         <TextField
@@ -63,10 +90,11 @@ function AddServiceForm() {
         />
         <br />
 
-        <Button variant="contained" onClick={() => SignUpHandler()}>
+        <Button variant="contained" onClick={() => AddServiceHandler()}>
           Submit
         </Button>
       </div>
+      <AddCategoryModal />
     </div>
   );
 }

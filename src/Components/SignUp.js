@@ -21,7 +21,7 @@ function SignUp() {
         "Content-Type": "application/json",
       },
     });
-    result = await (await result).json();
+    result = await result.json();
     if (result) {
       navigate("/login");
       console.log(result);

@@ -1,11 +1,14 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from "react";
 import {
   Box, Button, Container, IconButton,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useStyle from "../Style/LoginStyle";
 
 function ServiceList() {
+  const navigate = useNavigate();
   const [data, setData] = useState();
   const classes = useStyle();
   useEffect(() => {
@@ -13,9 +16,18 @@ function ServiceList() {
       resp.json().then((item) => setData(item));
     });
   }, []);
+  const AddServiceHandler = () => {
+    navigate("/addServiceForm");
+    console.log("Clicked button");
+  };
+
+  const UpdateHandler = (id) => {
+    console.log(id, "Update Handler is clicked");
+  };
 
   return (
     <div>
+      <Button onClick={() => AddServiceHandler()}>Add Service</Button>
       {data?.map((item) => (
         <Container sx={{ border: "1px solid", margin: "20px" }}>
           <Box
@@ -48,7 +60,7 @@ function ServiceList() {
               <p>{item.description}</p>
             </div>
             <div className={classes.buttons}>
-              <Button>Update</Button>
+              <Button onClick={() => UpdateHandler(item._id)}>Update</Button>
               <IconButton aria-label="delete" size="small">
                 <DeleteIcon fontSize="small" />
               </IconButton>
