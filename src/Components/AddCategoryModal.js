@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 
 function AddCategoryModal() {
-  const [cat, setCat] = useState();
-  const CategoryHandler = () => {
-    console.log(cat, "category");
+  const [category, setCat] = useState();
+  const CategoryHandler = async () => {
+    await fetch("http://localhost:8090/inhelp/addCategory", {
+      method: "Post",
+      body: JSON.stringify(category),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   };
 
   return (
