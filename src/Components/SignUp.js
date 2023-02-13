@@ -22,9 +22,8 @@ function SignUp() {
       },
     });
     result = await result.json();
-    if (result) {
+    if (result.status) {
       navigate("/login");
-      console.log(result);
     } else {
       console.log(result);
     }

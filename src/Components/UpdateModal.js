@@ -1,47 +1,44 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable react/no-unstable-nested-components */
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, MenuItem } from "@mui/material";
+import PropTypes from "prop-types";
 import useStyle from "../Style/LoginStyle";
-import AddCategoryModal from "./AddCategoryModal";
 
-function AddServiceForm() {
+function UpdateModal(props) {
+  const { item } = props;
   const classes = useStyle();
-  const navigate = useNavigate();
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [category, setCategory] = useState();
-  const [description, setDescription] = useState();
+  const [name, setName] = useState(item.name || "");
+  const [email, setEmail] = useState(item.email || "");
+  const [phone, setPhone] = useState(item.phone || "");
+  const [category, setCategory] = useState(item.category || "");
+  const [description, setDescription] = useState(item.description || "");
   const [data, setData] = useState();
+  const CategoryHandler = () => {
+    fetch("http://localhost:8090/inhelp/listCategory").then((resp) => {
+      resp.json().then((items) => setData(items));
+    });
+  };
 
   useEffect(() => {
-    fetch("http://localhost:8090/inhelp//listCategory").then((resp) => {
-      resp.json().then((item) => setData(item));
-    });
+    CategoryHandler();
   }, []);
 
-  const AddServiceHandler = async () => {
-    const DataInsert = {
+  const UpdateData = async () => {
+    const dataUpdated = {
       name,
       email,
       phone,
       category,
       description,
     };
-
-    const result = await fetch("http://localhost:8090/inhelp/addService", {
-      method: "Post",
-      body: JSON.stringify(DataInsert),
+    await fetch(`http://localhost:8090/inhelp/updateService/${item._id}`, {
+      method: "Put",
+      body: JSON.stringify(dataUpdated),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const resp = await result.json();
-    if (resp.status) {
-      navigate("/serviceList");
-    }
   };
 
   return (
@@ -52,30 +49,31 @@ function AddServiceForm() {
           id="outlined-basic-name"
           label="Name"
           type="text"
+          value={name}
           variant="outlined"
           onChange={(e) => setName(e.target.value)}
         />
-        <br />
         <TextField
           id="outlined-basic-number"
           label="Phone No"
+          value={phone}
           type="Number"
           variant="outlined"
           onChange={(e) => setPhone(e.target.value)}
         />
-        <br />
         <TextField
           id="outlined-basic-email"
           label="Email"
           type="email"
+          value={email}
           variant="outlined"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <br />
         <TextField
           id="outlined-select-category"
           select
           label="Category"
+          value={category}
           helperText="Please select your category"
           onChange={(e) => setCategory(e.target.value)}
         >
@@ -85,24 +83,24 @@ function AddServiceForm() {
             </MenuItem>
           ))}
         </TextField>
-        <br />
-
         <TextField
           id="outlined-basic-description"
           label="Description"
           type="text"
           variant="outlined"
+          value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <br />
-
-        <Button variant="contained" onClick={() => AddServiceHandler()}>
-          Submit
+        <Button variant="contained" onClick={() => UpdateData()}>
+          Update
         </Button>
       </div>
-      <AddCategoryModal />
     </div>
   );
 }
 
-export default AddServiceForm;
+UpdateModal.propTypes = {
+  item: PropTypes.string.isRequired,
+};
+
+export default UpdateModal;

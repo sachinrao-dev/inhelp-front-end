@@ -23,8 +23,8 @@ function Login() {
     });
 
     result = await (await result).json();
-    if (result.email && result.password) {
-      navigate("/Dashboard");
+    if (result.status) {
+      navigate("/serviceList");
     } else {
       console.log(result.response);
     }

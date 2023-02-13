@@ -6,31 +6,40 @@ import {
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useStyle from "../Style/LoginStyle";
+import UpdateModal from "./UpdateModal";
 
 function ServiceList() {
   const navigate = useNavigate();
   const [data, setData] = useState();
+  const [modal, setModal] = useState(false);
+  const [Id, setId] = useState();
   const classes = useStyle();
   useEffect(() => {
-    fetch("http://localhost:8090/inhelp//serviceList").then((resp) => {
+    fetch("http://localhost:8090/inhelp/serviceList").then((resp) => {
       resp.json().then((item) => setData(item));
     });
   }, []);
   const AddServiceHandler = () => {
     navigate("/addServiceForm");
-    console.log("Clicked button");
   };
 
-  const UpdateHandler = (id) => {
-    console.log(id, "Update Handler is clicked");
+  const DeleteHandler = (id) => {
+    console.log(id, "delete id is here");
+  };
+
+  const UpdateHandler = (item) => {
+    setId(item);
+    setModal(true);
   };
 
   return (
     <div>
       <Button onClick={() => AddServiceHandler()}>Add Service</Button>
+      <div className={classes.heading}>Services List</div>
       {data?.map((item) => (
         <Container sx={{ border: "1px solid", margin: "20px" }}>
           <Box
+            key={item._id}
             sx={{
               marginTop: "20px",
               display: "flex",
@@ -38,7 +47,6 @@ function ServiceList() {
               alignItems: "center",
             }}
           >
-            <div className={classes.heading}>Services List</div>
             <div className={classes.list}>
               <p>Name :</p>
               <p>{item.name}</p>
@@ -60,15 +68,19 @@ function ServiceList() {
               <p>{item.description}</p>
             </div>
             <div className={classes.buttons}>
-              <Button onClick={() => UpdateHandler(item._id)}>Update</Button>
-              <IconButton aria-label="delete" size="small">
+              <Button onClick={() => UpdateHandler(item)}>Update</Button>
+              <IconButton
+                aria-label="delete"
+                size="small"
+                onClick={() => DeleteHandler(item._id)}
+              >
                 <DeleteIcon fontSize="small" />
               </IconButton>
             </div>
           </Box>
         </Container>
       ))}
-
+      {modal && <UpdateModal item={Id} />}
     </div>
   );
 }

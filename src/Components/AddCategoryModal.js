@@ -6,7 +6,7 @@ function AddCategoryModal() {
   const CategoryHandler = async () => {
     await fetch("http://localhost:8090/inhelp/addCategory", {
       method: "Post",
-      body: JSON.stringify(category),
+      body: JSON.stringify({ category }),
       headers: {
         "Content-Type": "application/json",
       },
