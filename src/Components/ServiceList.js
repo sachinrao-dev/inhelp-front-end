@@ -14,17 +14,23 @@ function ServiceList() {
   const [modal, setModal] = useState(false);
   const [Id, setId] = useState();
   const classes = useStyle();
-  useEffect(() => {
+  const getServices = () => {
     fetch("http://localhost:8090/inhelp/serviceList").then((resp) => {
       resp.json().then((item) => setData(item));
     });
-  }, []);
+  };
+  useEffect(() => {
+    getServices();
+  }, [modal]);
   const AddServiceHandler = () => {
     navigate("/addServiceForm");
   };
 
-  const DeleteHandler = (id) => {
-    console.log(id, "delete id is here");
+  const DeleteHandler = async (id) => {
+    await fetch(`http://localhost:8090/inhelp/deleteService/${id}`, {
+      method: "Delete",
+    });
+    getServices();
   };
 
   const UpdateHandler = (item) => {
@@ -80,7 +86,7 @@ function ServiceList() {
           </Box>
         </Container>
       ))}
-      {modal && <UpdateModal item={Id} />}
+      {modal && <UpdateModal item={Id} setModal={setModal} />}
     </div>
   );
 }

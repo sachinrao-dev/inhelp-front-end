@@ -80,7 +80,7 @@ function AddServiceForm() {
           onChange={(e) => setCategory(e.target.value)}
         >
           {data?.map((option) => (
-            <MenuItem key={option._id} value={option}>
+            <MenuItem value={option.category}>
               {option.category}
             </MenuItem>
           ))}
