@@ -36,6 +36,11 @@ const useStyle = makeStyles({
     fontFamily: "sans-serif",
     fontWeight: "600",
   },
+  cardContainer: {
+    margin: "30px",
+    flexWrap: "wrap",
+    display: "flex",
+  },
 });
 
 export default useStyle;

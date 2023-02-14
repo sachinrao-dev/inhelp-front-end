@@ -14,11 +14,7 @@ function UpdateModal(props) {
   const [category, setCategory] = useState(item.category || "");
   const [description, setDescription] = useState(item.description || "");
   const [data, setData] = useState();
-  // const getServices = () => {
-  //   fetch("http://localhost:8090/inhelp/serviceList").then((resp) => {
-  //     resp.json().then((items) => setData(items));
-  //   });
-  // };
+
   const CategoryHandler = () => {
     fetch("http://localhost:8090/inhelp/listCategory").then((resp) => {
       resp.json().then((items) => setData(items));

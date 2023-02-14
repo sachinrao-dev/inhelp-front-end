@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import useStyle from "../Style/LoginStyle";
+import Controller from "./Controller";
 
 function Login() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function Login() {
   };
   return (
     <div className={classes.loginContainer}>
+      <Controller />
       <p>Login</p>
       <div className={classes.container}>
         <TextField
