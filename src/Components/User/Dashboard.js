@@ -5,9 +5,12 @@ import { TextField, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Controller from "../Admin/Controller";
 import useStyle from "../Style/LoginStyle";
+// import useFetch from "../useFetch";
 
 function Dashboard() {
   const [data, setData] = useState();
+  // const uri = "http://localhost:8090/inhelp/client/dashboard";
+  // const [deta] = useFetch(uri);
   const [search, setSearch] = useState();
   const classes = useStyle();
   const getServices = () => {
@@ -51,13 +54,13 @@ function Dashboard() {
         {data?.map((item) => (
           <Card sx={{ width: "30%", margin: "10px" }}>
             <CardContent>
-              <div className={classes.CardContent}>
+              <div className={classes.CardContent} style={{ display: "flex" }}>
                 <Typography
-                  sx={{ fontSize: 14 }}
+                  sx={{ fontSize: 14, marginRight: 2 }}
                   color="text.secondary"
                   gutterBottom
                 >
-                  Word of the Day
+                  Name :
                 </Typography>
                 <Typography
                   sx={{ fontSize: 14 }}
@@ -67,13 +70,22 @@ function Dashboard() {
                   {item.name}
                 </Typography>
               </div>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                adjective
-              </Typography>
-              <Typography variant="body2">
-                well meaning and kindly.
-                <br />
-              </Typography>
+              <div style={{ display: "flex" }}>
+                <Typography sx={{ mb: 1.5, marginRight: 2 }} color="text.secondary">
+                  Email :
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  {item.email}
+                </Typography>
+              </div>
+              <div>
+                <Typography variant="body2">
+                  Phone :
+                </Typography>
+                <Typography variant="body2">
+                  {item.phone}
+                </Typography>
+              </div>
             </CardContent>
           </Card>
         ))}

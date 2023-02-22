@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box, Button, Container, IconButton,
 } from "@mui/material";
@@ -7,21 +7,15 @@ import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useStyle from "../Style/LoginStyle";
 import UpdateModal from "./UpdateModal";
+import useFetch from "../useFetch";
 
 function ServiceList() {
+  const uri = "http://localhost:8090/inhelp/serviceList";
+  const [Data] = useFetch(uri);
   const navigate = useNavigate();
-  const [data, setData] = useState();
   const [modal, setModal] = useState(false);
   const [Id, setId] = useState();
   const classes = useStyle();
-  const getServices = () => {
-    fetch("http://localhost:8090/inhelp/serviceList").then((resp) => {
-      resp.json().then((item) => setData(item));
-    });
-  };
-  useEffect(() => {
-    getServices();
-  }, [modal]);
   const AddServiceHandler = () => {
     navigate("/addServiceForm");
   };
@@ -30,7 +24,6 @@ function ServiceList() {
     await fetch(`http://localhost:8090/inhelp/deleteService/${id}`, {
       method: "Delete",
     });
-    getServices();
   };
 
   const UpdateHandler = (item) => {
@@ -42,7 +35,7 @@ function ServiceList() {
     <div>
       <Button onClick={() => AddServiceHandler()}>Add Service</Button>
       <div className={classes.heading}>Services List</div>
-      {data?.map((item) => (
+      {Data?.map((item) => (
         <Container sx={{ border: "1px solid", margin: "20px" }}>
           <Box
             key={item._id}

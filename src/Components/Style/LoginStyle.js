@@ -37,9 +37,9 @@ const useStyle = makeStyles({
     fontWeight: "600",
   },
   cardContainer: {
+    display: "flex",
     margin: "30px",
     flexWrap: "wrap",
-    display: "flex",
   },
 });
 
